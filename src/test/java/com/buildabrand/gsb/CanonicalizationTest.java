@@ -14,19 +14,19 @@ import com.buildabrand.gsb.util.URLUtils;
 
 /**
  * Test Canonicalisation
- * @author Dave Shanley
  *
+ * @author Dave Shanley
  */
 public class CanonicalizationTest {
-	
-	private Logger log = LoggerFactory.getLogger(CanonicalizationTest.class);
-	
-	@Rule
-	public ErrorCollector collector = new ErrorCollector();
-	private URLUtils utils = URLUtils.getInstance();
-	
-	@Test
-	public void testURLCanoniconialization() {
+
+    private Logger log = LoggerFactory.getLogger(CanonicalizationTest.class);
+
+    @Rule
+    public ErrorCollector collector = new ErrorCollector();
+    private URLUtils utils = URLUtils.getInstance();
+
+    @Test
+    public void testURLCanoniconialization() {
         testCannicalize("http://google.com/", "http://google.com/");
         testCannicalize("http://google.com:80/a/b", "http://google.com/a/b");
         testCannicalize("http://google.com:80/a/b/c/", "http://google.com/a/b/c/");
@@ -102,7 +102,9 @@ public class CanonicalizationTest {
         // The path should have a leading "/" even if the hostname was terminated
         // by something other than a "/".
         testCannicalize("ftp://host.com?q", "ftp://host.com/?q");
-	}
+        // Regression test 1
+        testCannicalize("http://../css/public.css", null);
+    }
 
     @Test
     public void testCanonicalizeIp() {
@@ -137,11 +139,11 @@ public class CanonicalizationTest {
         // IP Address
         assertEquals("10.1.2.3", utils.canonicalizeIp("167838211"));
     }
-	
-	private void testCannicalize(String url, String expected) {
-		String result = utils.canonicalizeURL(url);
-		log.debug("{} => {}", url, result);
-		collector.checkThat(result, is(expected));
-	}
-	
+
+    private void testCannicalize(String url, String expected) {
+        String result = utils.canonicalizeURL(url);
+        log.debug("{} => {}", url, result);
+        collector.checkThat(result, is(expected));
+    }
+
 }

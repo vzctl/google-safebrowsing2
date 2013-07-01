@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * URLUtils
  * Canonicalisation and processing of URL's to be matched in database.
- *
+ * <p/>
  * <h4>Copyright and License</h4>
  * This code is copyright (c) Buildabrand Ltd, 2011 except where
  * otherwise stated. It is released as
@@ -27,10 +27,10 @@ import org.slf4j.LoggerFactory;
  * @author Dave Shanley <dave@buildabrand.com>
  */
 public class URLUtils {
-	
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
-	
-	private UrlEncoder codec = new UrlEncoder();
+
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private UrlEncoder codec = new UrlEncoder();
 
     // (?P<host>[^:]*)(:(?P<port>\d+))?$
     private Pattern HOST_PORT_REGEXP = Pattern.compile("^(?:.*@)?([^:]*)(:(\\d+))?$");
@@ -43,26 +43,29 @@ public class URLUtils {
 
     private String SAFE_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
-	private static URLUtils instance;
-	
-	/* singleton */
-	private URLUtils() {}
-	
-	public static URLUtils getInstance() {
-		if(instance==null) {
-			instance = new URLUtils();
-		}
-		return instance;
-	}
+    private static URLUtils instance;
 
-	/** Returns the canonicalized form of a URL, core logic written by Henrik Sjostrand, heavily modified for v2 by Dave Shanley.
-	 * @author Henrik Sjostrand, Netvouz, http://www.netvouz.com/, info@netvouz.com & Dave Shanley <dave@buildabrand.com>
-	 * @param queryURL
-	 * @return
-	 */
-	public String canonicalizeURL(String queryURL) {
-		if (StringUtils.isEmpty(queryURL)) {
-			return null;
+    /* singleton */
+    private URLUtils() {
+    }
+
+    public static URLUtils getInstance() {
+        if (instance == null) {
+            instance = new URLUtils();
+        }
+        return instance;
+    }
+
+    /**
+     * Returns the canonicalized form of a URL, core logic written by Henrik Sjostrand, heavily modified for v2 by Dave Shanley.
+     *
+     * @param queryURL
+     * @return
+     * @author Henrik Sjostrand, Netvouz, http://www.netvouz.com/, info@netvouz.com & Dave Shanley <dave@buildabrand.com>
+     */
+    public String canonicalizeURL(String queryURL) {
+        if (StringUtils.isEmpty(queryURL)) {
+            return null;
         }
 
         // Start by stripping off the fragment identifier.
@@ -116,8 +119,8 @@ public class URLUtils {
         // default port for that url scheme
         if (url.getPort() != -1 &&
                 ((url.getProtocol().equalsIgnoreCase("http") && url.getPort() != 80) ||
-                (url.getProtocol().equalsIgnoreCase("https") && url.getPort() != 443) ||
-                (url.getProtocol().equalsIgnoreCase("ftp") && url.getPort() != 21))) {
+                        (url.getProtocol().equalsIgnoreCase("https") && url.getPort() != 443) ||
+                        (url.getProtocol().equalsIgnoreCase("ftp") && url.getPort() != 21))) {
             canonicalHost = canonicalHost + ":" + url.getPort();
         }
 
@@ -129,7 +132,7 @@ public class URLUtils {
         }
 
         return canonicalUrl;
-	}
+    }
 
     private String canonicalizePath(String path) {
         if (StringUtils.isEmpty(path)) {
@@ -148,7 +151,7 @@ public class URLUtils {
 
         Stack<String> pathComponents = new Stack<String>();
         for (String pathComponent : StringUtils.split(path, '/')) {
-             // If the path component is '..' we skip it and remove the preceding path
+            // If the path component is '..' we skip it and remove the preceding path
             // component if there are any.
             if (pathComponent.equals("..")) {
                 if (!pathComponents.isEmpty()) {
@@ -253,7 +256,7 @@ public class URLUtils {
     private String convertIpAddress(String ipAddr) {
         String[] ipAddrSplit = StringUtils.split(ipAddr, '.');
 
-        if (ipAddrSplit.length > 4) {
+        if (ipAddrSplit.length == 0 || ipAddrSplit.length > 4) {
             return null;
         }
 
