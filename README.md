@@ -1,4 +1,5 @@
 # Google Safebrowsing API v2 for Scala and Java
+[![Build Status](https://travis-ci.org/snopoke/google-safebrowsing2.png)](https://travis-ci.org/snopoke/google-safebrowsing2)
 
 This project implements the [Google Safebrowsing API v2](https://developers.google.com/safe-browsing/) 
 and the [Google Safebrowsing Lookup API](https://developers.google.com/safe-browsing/lookup_guide) in Scala.
@@ -110,5 +111,7 @@ New Storage classes can be added by extending the net.google.safebrowsing2.db.DB
 ## Attributions
 * The is based off Julien Sobrier's [Net-Google-SafeBrowsing2](https://github.com/juliensobrier/Net-Google-SafeBrowsing2) perl module.
 * URL Canonicalization by Dave Shanley as part of [jgooglesafebrowsing](http://code.google.com/p/jgooglesafebrowsing/).
+  * Subsequently heavily modified by [Edward Chu](https://github.com/edwardchu)
 * ExpressionGenerator inspired by the [google-safe-browsing](http://code.google.com/p/google-safe-browsing/) python module.
 * JDBC API by [Stepan Koltsov](https://bitbucket.org/stepancheg/scala-misc/)
+* [Edward Chu](https://github.com/edwardchu)
